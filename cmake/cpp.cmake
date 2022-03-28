@@ -330,6 +330,21 @@ install(DIRECTORY ortools/constraint_solver/docs/
   PATTERN "*.md")
 endif()
 
+#################
+## C++ Package ##
+#################
+set(CPP_PROJECT_DIR ${PROJECT_BINARY_DIR}/cxx})
+
+add_custom_command(
+  OUTPUT ${DOTNET_PROJECT_DIR}/timestamp
+  COMMENT "Generate C++ archive (${CPP_PROJECT_DIR}/timestamp)"
+  WORKING_DIRECTORY ${DOTNET_PROJECT_DIR})
+
+add_custom_target(cpp_archive
+  DEPENDS
+    ${CPP_PROJECT_DIR}/archive_timestamp
+    WORKING_DIRECTORY ${CPP_PROJECT_DIR})
+
 ############################
 ## Samples/Examples/Tests ##
 ############################

@@ -665,6 +665,7 @@ endif  # HAS_PYTHON=ON
 .PHONY: clean_python # Clean Python output from previous build.
 clean_python:
 	-$(DELREC) $(TEMP_PYTHON_DIR)*
+	-$(DELREC) $(INSTALL_PYTHON_NAME)
 	-$(DEL) *.whl
 
 #############

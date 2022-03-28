@@ -493,6 +493,7 @@ endif  # HAS_JAVA=ON
 .PHONY: clean_java # Clean Java output from previous build.
 clean_java:
 	-$(DELREC) $(TEMP_JAVA_DIR)
+	-$(DELREC) $(INSTALL_JAVA_NAME)
 	-$(DEL) *.jar
 
 #############

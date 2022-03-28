@@ -22,7 +22,7 @@ archive: $(INSTALL_DIR)$(ARCHIVE_EXT)
 fz_archive: $(FZ_INSTALL_DIR)$(ARCHIVE_EXT)
 
 .PHONY: data_archive # Create OR-Tools archive for data examples.
-data_archive: $(DATA_INSTALL_DIR)$(ARCHIVE_EXT)
+data_archive: $(INSTALL_DATA_NAME)$(ARCHIVE_EXT)
 
 .PHONY: clean_archive # Clean Archive output from previous build.
 clean_archive:
@@ -33,7 +33,7 @@ clean_archive:
 	-$(DELREC) $(TEMP_FZ_TEST_DIR)
 	-$(DEL) $(INSTALL_DIR)$(ARCHIVE_EXT)
 	-$(DEL) $(FZ_INSTALL_DIR)$(ARCHIVE_EXT)
-	-$(DEL) $(DATA_INSTALL_DIR)$(ARCHIVE_EXT)
+	-$(DEL) $(INSTALL_DATA_NAME)$(ARCHIVE_EXT)
 
 $(TEMP_ARCHIVE_DIR):
 	$(MKDIR_P) $(TEMP_ARCHIVE_DIR)
@@ -88,29 +88,29 @@ $(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/java: | $(TEMP_ARCHIVE_DIR)/$(INSTAL
 	$(MKDIR) $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sjava
 
 define java-sample-archive =
-$$(TEMP_ARCHIVE_DIR)/$$(INSTALL_DIR)/examples/java/%/pom.xml: \
- $$(TEMP_JAVA_DIR)/$1/%/pom.xml \
+$(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/java/%/pom.xml: \
+ $(TEMP_JAVA_DIR)/$1/%/pom.xml \
  ortools/$1/samples/%.java \
- | $$(TEMP_ARCHIVE_DIR)/$$(INSTALL_DIR)/examples/java
-	-$$(MKDIR_P) $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sjava$$S$$*$$S$$(JAVA_SRC_PATH)
-	$$(COPY) $$(SRC_DIR)$$Sortools$$S$1$$Ssamples$$S$$*.java \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sjava$$S$$*$$S$$(JAVA_SRC_PATH)
-	$$(COPY) $$(TEMP_JAVA_DIR)$$S$1$$S$$*$$Spom.xml \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sjava$$S$$*
+ | $(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/java
+	-$(MKDIR_P) $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sjava$S$$*$S$(JAVA_SRC_PATH)
+	$(COPY) $(SRC_DIR)$Sortools$S$1$Ssamples$S$$*.java \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sjava$S$$*$S$(JAVA_SRC_PATH)
+	$(COPY) $(TEMP_JAVA_DIR)$S$1$S$$*$Spom.xml \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sjava$S$$*
 endef
 
 $(foreach sample,$(JAVA_SAMPLES),$(eval $(call java-sample-archive,$(sample))))
 
 define java-example-archive =
-$$(TEMP_ARCHIVE_DIR)/$$(INSTALL_DIR)/examples/java/%/pom.xml: \
- $$(TEMP_JAVA_DIR)/$1/%/pom.xml \
+$(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/java/%/pom.xml: \
+ $(TEMP_JAVA_DIR)/$1/%/pom.xml \
  examples/$1/%.java \
- | $$(TEMP_ARCHIVE_DIR)/$$(INSTALL_DIR)/examples/java
-	-$$(MKDIR_P) $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sjava$$S$$*$$S$$(JAVA_SRC_PATH)
-	$$(COPY) $$(SRC_DIR)$$Sexamples$$S$1$$S$$*.java \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sjava$$S$$*$$S$$(JAVA_SRC_PATH)
-	$$(COPY) $$(TEMP_JAVA_DIR)$$S$1$$S$$*$$Spom.xml \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sjava$$S$$*
+ | $(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/java
+	-$(MKDIR_P) $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sjava$S$$*$S$(JAVA_SRC_PATH)
+	$(COPY) $(SRC_DIR)$Sexamples$S$1$S$$*.java \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sjava$S$$*$S$(JAVA_SRC_PATH)
+	$(COPY) $(TEMP_JAVA_DIR)$S$1$S$$*$Spom.xml \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sjava$S$$*
 endef
 
 $(foreach example,$(JAVA_EXAMPLES),$(eval $(call java-example-archive,$(example))))
@@ -140,17 +140,17 @@ $(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/dotnet: | $(TEMP_ARCHIVE_DIR)/$(INST
 	$(MKDIR) $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet
 
 define dotnet-sample-archive =
-$$(TEMP_ARCHIVE_DIR)/$$(INSTALL_DIR)/examples/dotnet/%/plop: \
- $$(TEMP_DOTNET_DIR)/$1/%/%.csproj \
+$(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/dotnet/%/plop: \
+ $(TEMP_DOTNET_DIR)/$1/%/%.csproj \
  ortools/$1/samples/%.cs \
- | $$(TEMP_ARCHIVE_DIR)/$$(INSTALL_DIR)/examples/dotnet
-	-$$(MKDIR_P) $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sdotnet$$S$$*
-	$$(COPY) $$(SRC_DIR)$$Sortools$$S$1$$Ssamples$$S$$*.cs \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sdotnet$$S$$*
-	$$(COPY) $$(TEMP_DOTNET_DIR)$$S$1$$S$$*$$S$$*.csproj \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sdotnet$$S$$*
-	-$$(SED) -i -e 's/$$(BUILD_DIR)\/dotnet\///' \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sdotnet$$S$$*$$S$$*.csproj
+ | $(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/dotnet
+	-$(MKDIR_P) $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet$S$$*
+	$(COPY) $(SRC_DIR)$Sortools$S$1$Ssamples$S$$*.cs \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet$S$$*
+	$(COPY) $(TEMP_DOTNET_DIR)$S$1$S$$*$S$$*.csproj \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet$S$$*
+	-$(SED) -i -e 's/$(BUILD_DIR)\/dotnet\///' \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet$S$$*$S$$*.csproj
 endef
 
 $(foreach sample,$(DOTNET_SAMPLES),$(eval $(call dotnet-sample-archive,$(sample))))
@@ -159,17 +159,17 @@ SAMPLE_DOTNET_FILES = \
   $(addsuffix /plop,$(addprefix $(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/dotnet/,$(basename $(notdir $(wildcard ortools/*/samples/*.cs)))))
 
 define dotnet-example-archive =
-$$(TEMP_ARCHIVE_DIR)/$$(INSTALL_DIR)/examples/dotnet/%/plop: \
- $$(TEMP_DOTNET_DIR)/$1/%/%.csproj \
+$(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/dotnet/%/plop: \
+ $(TEMP_DOTNET_DIR)/$1/%/%.csproj \
  examples/$1/%.cs \
- | $$(TEMP_ARCHIVE_DIR)/$$(INSTALL_DIR)/examples/dotnet
-	-$$(MKDIR_P) $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sdotnet$$S$$*
-	$$(COPY) $$(SRC_DIR)$$Sexamples$$S$1$$S$$*.cs \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sdotnet$$S$$*
-	$$(COPY) $$(TEMP_DOTNET_DIR)$$S$1$$S$$*$$S$$*.csproj \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sdotnet$$S$$*
-	-$$(SED) -i -e 's/$$(BUILD_DIR)\/dotnet\///' \
- $$(TEMP_ARCHIVE_DIR)$$S$$(INSTALL_DIR)$$Sexamples$$Sdotnet$$S$$*$$S$$*.csproj
+ | $(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/dotnet
+	-$(MKDIR_P) $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet$S$$*
+	$(COPY) $(SRC_DIR)$Sexamples$S$1$S$$*.cs \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet$S$$*
+	$(COPY) $(TEMP_DOTNET_DIR)$S$1$S$$*$S$$*.csproj \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet$S$$*
+	-$(SED) -i -e 's/$(BUILD_DIR)\/dotnet\///' \
+ $(TEMP_ARCHIVE_DIR)$S$(INSTALL_DIR)$Sexamples$Sdotnet$S$$*$S$$*.csproj
 endef
 
 $(foreach example,$(DOTNET_EXAMPLES),$(eval $(call dotnet-example-archive,$(example))))
@@ -223,36 +223,36 @@ else
 endif
 #	-$(DELREC) $(TEMP_FZ_DIR)
 
-$(DATA_INSTALL_DIR)$(ARCHIVE_EXT):
+$(INSTALL_DATA_NAME)$(ARCHIVE_EXT):
 	-$(DELREC) $(TEMP_DATA_DIR)
 	-$(MKDIR) $(TEMP_DATA_DIR)
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Set_jobshop
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Sflexible_jobshop
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Sjobshop
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Smultidim_knapsack
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Scvrptw
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Spdptw
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Sfill_a_pix
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Sminesweeper
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Srogo
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Ssurvo_puzzle
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Squasigroup_completion
-	-$(MKDIR) $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)$Sexamples$Sdata$Sdiscrete_tomography
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Set_jobshop
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Sflexible_jobshop
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Sjobshop
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Smultidim_knapsack
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Scvrptw
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Spdptw
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Sfill_a_pix
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Sminesweeper
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Srogo
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Ssurvo_puzzle
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Squasigroup_completion
+	-$(MKDIR) $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)$Sexamples$Sdata$Sdiscrete_tomography
 #credits
-	$(COPY) LICENSE $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)
+	$(COPY) LICENSE $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)
 	$(TAR) -c -v \
 --exclude *svn* \
 --exclude *roadef* \
 --exclude *vector_packing* \
 --exclude *nsplib* \
-examples$Sdata | $(TAR) -xvm -C $(TEMP_DATA_DIR)$S$(DATA_INSTALL_DIR)
+examples$Sdata | $(TAR) -xvm -C $(TEMP_DATA_DIR)$S$(INSTALL_DATA_NAME)
 ifeq ($(PLATFORM),WIN64)
-	cd $(TEMP_DATA_DIR) && ..$S$(ZIP) -r ..$S$(DATA_INSTALL_DIR)$(ARCHIVE_EXT) $(DATA_INSTALL_DIR)
+	cd $(TEMP_DATA_DIR) && ..$S$(ZIP) -r ..$S$(INSTALL_DATA_NAME)$(ARCHIVE_EXT) $(INSTALL_DATA_NAME)
 else
-	$(TAR) -C $(TEMP_DATA_DIR) --no-same-owner -czvf $(DATA_INSTALL_DIR)$(ARCHIVE_EXT) $(DATA_INSTALL_DIR)
+	$(TAR) -C $(TEMP_DATA_DIR) --no-same-owner -czvf $(INSTALL_DATA_NAME)$(ARCHIVE_EXT) $(INSTALL_DATA_NAME)
 endif
 #	-$(DELREC) $(TEMP_DATA_DIR)
 
@@ -309,7 +309,11 @@ detect_archive:
 	@echo TEMP_FZ_DIR = $(TEMP_FZ_DIR)
 	@echo FZ_INSTALL_DIR = $(FZ_INSTALL_DIR)
 	@echo TEMP_DATA_DIR = $(TEMP_DATA_DIR)
-	@echo DATA_INSTALL_DIR = $(DATA_INSTALL_DIR)
+	@echo INSTALL_CPP_NAME = $(INSTALL_CPP_NAME)
+	@echo INSTALL_DOTNET_NAME = $(INSTALL_DOTNET_NAME)
+	@echo INSTALL_JAVA_NAME = $(INSTALL_JAVA_NAME)
+	@echo INSTALL_PYTHON_NAME = $(INSTALL_PYTHON_NAME)
+	@echo INSTALL_DATA_NAME = $(INSTALL_DATA_NAME)
 	@echo ARCHIVE_EXT = $(ARCHIVE_EXT)
 ifeq ($(PLATFORM),WIN64)
 	@echo off & echo(
