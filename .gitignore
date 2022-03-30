@@ -1,6 +1,8 @@
 Makefile.local
 Makefile.local~
 
+build_make/
+install_make/
 dependencies/
 include/
 share/
@@ -47,7 +49,6 @@ or-tools.snk
 private-key.gpg
 settings.xml
 export
-
 
 ortools/bazel-*
 examples/bazel-*
