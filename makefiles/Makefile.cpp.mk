@@ -349,18 +349,18 @@ endif
 ##  Test targets  ##
 ####################
 
-.PHONY: test_cc_algorithms_samples # Build and Run all C++ Algorithms Samples (located in ortools/algorithms/samples)
-test_cc_algorithms_samples: \
+.PHONY: test_cpp_algorithms_samples # Build and Run all C++ Algorithms Samples (located in ortools/algorithms/samples)
+test_cpp_algorithms_samples: \
  rcpp_knapsack \
  rcpp_simple_knapsack_program
 
-.PHONY: test_cc_graph_samples # Build and Run all C++ Graph Samples (located in ortools/graph/samples)
-test_cc_graph_samples: \
+.PHONY: test_cpp_graph_samples # Build and Run all C++ Graph Samples (located in ortools/graph/samples)
+test_cpp_graph_samples: \
  rcpp_simple_max_flow_program \
  rcpp_simple_min_cost_flow_program
 
-.PHONY: test_cc_constraint_solver_samples # Build and Run all C++ CP Samples (located in ortools/constraint_solver/samples)
-test_cc_constraint_solver_samples: \
+.PHONY: test_cpp_constraint_solver_samples # Build and Run all C++ CP Samples (located in ortools/constraint_solver/samples)
+test_cpp_constraint_solver_samples: \
  rcpp_minimal_jobshop_cp \
  rcpp_nurses_cp \
  rcpp_rabbits_and_pheasants_cp \
@@ -385,8 +385,8 @@ test_cc_constraint_solver_samples: \
  rcpp_vrp_time_windows \
  rcpp_vrp_with_time_limit
 
-.PHONY: test_cc_linear_solver_samples # Build and Run all C++ LP Samples (located in ortools/linear_solver/samples)
-test_cc_linear_solver_samples: \
+.PHONY: test_cpp_linear_solver_samples # Build and Run all C++ LP Samples (located in ortools/linear_solver/samples)
+test_cpp_linear_solver_samples: \
  rcpp_assignment_mip \
  rcpp_basic_example \
  rcpp_bin_packing_mip \
@@ -402,8 +402,8 @@ test_cc_linear_solver_samples: \
 test_cc_model_builder_samples: \
 
 
-.PHONY: test_cc_sat_samples # Build and Run all C++ Sat Samples (located in ortools/sat/samples)
-test_cc_sat_samples: \
+.PHONY: test_cpp_sat_samples # Build and Run all C++ Sat Samples (located in ortools/sat/samples)
+test_cpp_sat_samples: \
  rcpp_assignment_sat \
  rcpp_assumptions_sample_sat \
  rcpp_binpacking_problem_sat \
@@ -428,12 +428,12 @@ test_cc_sat_samples: \
 
 .PHONY: check_cpp_pimpl
 check_cpp_pimpl: \
- test_cc_algorithms_samples \
- test_cc_constraint_solver_samples \
- test_cc_graph_samples \
- test_cc_linear_solver_samples \
- test_cc_model_builder_samples \
- test_cc_sat_samples \
+ test_cpp_algorithms_samples \
+ test_cpp_constraint_solver_samples \
+ test_cpp_graph_samples \
+ test_cpp_linear_solver_samples \
+ test_cpp_model_builder_samples \
+ test_cpp_sat_samples \
  \
  rcpp_linear_programming \
  rcpp_constraint_programming_cp \
@@ -562,44 +562,6 @@ ifeq ($(PLATFORM),WIN64)
 	$(ZIP) -r $(INSTALL_CPP_NAME)$(ARCHIVE_EXT) $(INSTALL_CPP_NAME)
 else
 	$(TAR) --no-same-owner -czvf $(INSTALL_CPP_NAME)$(ARCHIVE_EXT) $(INSTALL_CPP_NAME)
-endif
-
-
-
-
-
-
-#################
-##  Packaging  ##
-#################
-TEMP_PACKAGE_CC_DIR = temp_package_cc
-
-$(TEMP_PACKAGE_CC_DIR):
-	-$(MKDIR_P) $(TEMP_PACKAGE_CC_DIR)
-
-$(TEMP_PACKAGE_CC_DIR)/$(INSTALL_DIR): | $(TEMP_PACKAGE_CC_DIR)
-	$(MKDIR) $(TEMP_PACKAGE_CC_DIR)$S$(INSTALL_DIR)
-
-package_cc: cpp | $(TEMP_PACKAGE_CC_DIR)/$(INSTALL_DIR)
-ifeq ($(PLATFORM),WIN64)
-	cd $(TEMP_PACKAGE_CC_DIR)\$(INSTALL_DIR) && \
-		..\..\$(TAR) -C ..\.. -c -v include | ..\..\$(TAR) xvm
-	cd $(TEMP_PACKAGE_CC_DIR)\$(INSTALL_DIR) && \
-		..\..\$(TAR) -C ..\.. -c -v lib | ..\..\$(TAR) xvm
-	cd $(TEMP_PACKAGE_CC_DIR)\$(INSTALL_DIR) && \
-		..\..\$(TAR) -C ..\.. -c -v share | ..\..\$(TAR) xvm
-else
-	cd $(TEMP_PACKAGE_CC_DIR)/$(INSTALL_DIR) && \
-		tar -C ../.. -c -v include | tar xvm
-	cd $(TEMP_PACKAGE_CC_DIR)/$(INSTALL_DIR) && \
-		tar -C ../.. -c -v lib | tar xvm
-	cd $(TEMP_PACKAGE_CC_DIR)/$(INSTALL_DIR) && \
-		tar -C ../.. -c -v share | tar xvm
-endif
-ifeq ($(PLATFORM),WIN64)
-	cd $(TEMP_PACKAGE_CC_DIR) && ..$S$(ZIP) -r ..$S$(INSTALL_DIR)$(ARCHIVE_EXT) $(INSTALL_DIR)
-else
-	$(TAR) -C $(TEMP_PACKAGE_CC_DIR) --no-same-owner -czvf $(INSTALL_DIR)$(ARCHIVE_EXT) $(INSTALL_DIR)
 endif
 
 ###############

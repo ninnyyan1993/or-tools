@@ -407,6 +407,62 @@ test_java: \
  test_java_contrib \
  test_java_java
 
+###############
+##  Archive  ##
+###############
+.PHONY: archive_java # Add C++ OR-Tools to archive.
+archive_java: $(INSTALL_JAVA_NAME)$(ARCHIVE_EXT)
+
+$(INSTALL_JAVA_NAME):
+	$(MKDIR) $(INSTALL_JAVA_NAME)
+
+$(INSTALL_JAVA_NAME)/examples: | $(INSTALL_JAVA_NAME)
+	$(MKDIR) $(INSTALL_JAVA_NAME)$Sexamples
+
+define java-sample-archive =
+$(INSTALL_JAVA_NAME)/examples/%/CMakeLists.txt: \
+ $(TEMP_JAVA_DIR)/$1/%/pom.xml \
+ $(SRC_DIR)/ortools/$1/samples/%.java \
+ | $(INSTALL_JAVA_NAME)/examples
+	-$(MKDIR_P) $(INSTALL_JAVA_NAME)$Sexamples$S$$*
+	$(COPY) $(SRC_DIR)$Sortools$S$1$Ssamples$S$$*.cs $(INSTALL_JAVA_NAME)$Sexamples$S$$*
+	$(COPY) $(TEMP_JAVA_DIR)$S$1$S$$*$SCMakeLists.txt $(INSTALL_JAVA_NAME)$Sexamples$S$$*
+endef
+
+$(foreach sample,$(JAVA_SAMPLES),$(eval $(call java-sample-archive,$(sample))))
+
+define java-example-archive =
+$(TEMP_ARCHIVE_DIR)/$(INSTALL_DIR)/examples/%/CMakeLists.txt: \
+ $(TEMP_JAVA_DIR)/$1/%/pom.xml \
+ $(SRC_DIR)/examples/$1/%.java \
+ | $(INSTALL_JAVA_NAME)/examples
+	-$(MKDIR_P) $(INSTALL_JAVA_NAME)$Sexamples$S$$*
+	$(COPY) $(SRC_DIR)$Sexamples$S$1$S$$*.cs $(INSTALL_JAVA_NAME)$Sexamples$S$$*
+	$(COPY) $(TEMP_JAVA_DIR)$S$1$S$$*$SCMakeLists.txt $(INSTALL_JAVA_NAME)$Sexamples$S$$*
+endef
+
+$(foreach example,$(JAVA_EXAMPLES),$(eval $(call java-example-archive,$(example))))
+
+SAMPLE_JAVA_FILES = \
+  $(addsuffix /CMakeLists.txt,$(addprefix $(INSTALL_JAVA_NAME)/examples/,$(basename $(notdir $(wildcard ortools/*/samples/*.cs)))))
+
+EXAMPLE_JAVA_FILES = \
+  $(addsuffix /CMakeLists.txt,$(addprefix $(INSTALL_JAVA_NAME)/examples/,$(basename $(notdir $(wildcard examples/contrib/*.cs))))) \
+  $(addsuffix /CMakeLists.txt,$(addprefix $(INSTALL_JAVA_NAME)/examples/,$(basename $(notdir $(wildcard examples/java/*.cs)))))
+
+$(INSTALL_JAVA_NAME)$(ARCHIVE_EXT): java \
+ $(SAMPLE_JAVA_FILES) \
+ $(EXAMPLE_JAVA_FILES)
+	$(COPY) $(BUILD_DIR)$Sjava$Spackages$S*.nupkg $(INSTALL_JAVA_NAME)
+ifeq ($(PLATFORM),WIN64)
+	$(ZIP) -r $(INSTALL_JAVA_NAME)$(ARCHIVE_EXT) $(INSTALL_JAVA_NAME)
+else
+	$(TAR) --no-same-owner -czvf $(INSTALL_JAVA_NAME)$(ARCHIVE_EXT) $(INSTALL_JAVA_NAME)
+endif
+
+########################
+##  Publish Java Pkg  ##
+########################
 .PHONY: publish_java_runtime
 publish_java_runtime: java_runtime
 	cd $(TEMP_JAVA_DIR)$S$(JAVA_ORTOOLS_NATIVE_PROJECT) && "$(MVN_BIN)" deploy
