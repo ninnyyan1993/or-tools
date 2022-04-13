@@ -1727,7 +1727,7 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
 
     # For each driver and each shift, we store:
     #   - the total driving time including this shift
-    #   - the acrued driving time since the last 30 minute break
+    #   - the acrued driving time since the last 30 minute break # capicity
     # Special arcs have the following effect:
     #   - 'from source to shift' sets the starting time and accumulate the first
     #      shift
@@ -1759,7 +1759,7 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
 
     # Used to propagate more between drivers
     shared_incoming_literals = collections.defaultdict(list)
-    shared_outgoing_literals = collections.defaultdict(list)
+    shared_outgoing_literals = collections.defaultdict(list) # dict subclass that calls a factory function to supply missing values
 
     for d in range(num_drivers):
         start_times.append(
@@ -1899,10 +1899,10 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
     for s in range(num_shifts):
         model.AddExactlyOne(performed[d, s] for d in range(num_drivers))
         # Globally, each node has one incoming and one outgoing literal
-        model.AddExactlyOne(shared_incoming_literals[s])
+        model.AddExactlyOne(shared_incoming_literals[s])# AddExactlyOne Sum(literals) == 1
         model.AddExactlyOne(shared_outgoing_literals[s])
 
-    # Symmetry breaking
+    # Symmetry对称 breaking
 
     # The first 3 shifts must be performed by 3 different drivers.
     # Let's assign them to the first 3 drivers in sequence
@@ -1916,7 +1916,7 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
             model.AddImplication(working_drivers[d].Not(),
                                  working_drivers[d + 1].Not())
 
-    # Redundant constraints: sum of driving times = sum of shift driving times
+    # Redundant冗余 constraints: sum of driving times = sum of shift driving times
     model.Add(cp_model.LinearExpr.Sum(driving_times) == total_driving_time)
     if not minimize_drivers:
         model.Add(
