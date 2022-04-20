@@ -1,0 +1,511 @@
+
+## Starting CP-SAT solver v9.3.10497
+Parameters: log_search_progress: true num_search_workers: 8
+
+Initial optimization model '':
+#Variables: 13440 (#bools:10 in objective)
+  - 12400 in [0,1]
+  - 500 in [0,420]
+  - 510 in [0,540]
+  - 10 in [0,900]
+  - 10 in [308,1248]
+  - 10 in [318,1263]
+#kBoolOr: 9 (#enforced: 9) (#literals: 9)
+#kExactlyOne: 1170 (#literals: 48080)
+#kLinear1: 13332 (#enforced: 13330)
+#kLinear2: 13000 (#enforced: 13000)
+#kLinear3: 10
+#kLinearN: 1 (#terms: 10)
+
+Starting presolve at 0.01s
+[ExtractEncodingFromLinear] #potential_supersets=1071 #potential_subsets=0 #at_most_one_encodings=0 #exactly_one_encodings=0 #unique_terms=0 #multiple_terms=0 #literals=0 time=0.000286s
+[Probing] deterministic_time: 1.00015 (limit: 1) wall_time: 0.626649 (Aborted 5817/18714)
+[Probing]  - new fixed Boolean: 177 (1613/18714)
+[Probing]  - new integer holes: 22
+[Probing]  - new binary clause: 84578
+[SAT presolve] num removable Booleans: 1532 / 13462
+[SAT presolve] num trivial clauses: 0
+[SAT presolve] [0s] clauses:49 literals:98 vars:39 one_side_vars:2 simple_definition:26 singleton_clauses:0
+[SAT presolve] [0.000106915s] clauses:49 literals:98 vars:39 one_side_vars:2 simple_definition:26 singleton_clauses:0
+[SAT presolve] [0.000441059s] clauses:49 literals:98 vars:39 one_side_vars:2 simple_definition:26 singleton_clauses:0
+[MaxClique] Merged 49(98 literals) into 16(32 literals) at_most_ones.
+[DetectDuplicateConstraints] #duplicates=36 time=0.0134869s
+[DetectDominatedLinearConstraints] #relevant_constraints=9 #work_done=96 #num_inclusions=0 #num_redundant=0 time=0.000317741s
+[DetectOverlappingColumns] #processed_columns=956 #work_done=162 #nz_reduction=0 time=0.00248455s
+[ProcessSetPPC] #relevant_constraints=1071 #num_inclusions=0 work=136312 time=0.00266199s
+[Symmetry] Graph for symmetry has 38978 nodes and 101349 arcs.
+[Symmetry] Symmetry computation done. time: 0.0134706 dtime: 0.0222577
+[Symmetry] #generators: 1, average support size: 2430
+[Symmetry] 1215 orbits with sizes: 2,2,2,2,2,2,2,2,2,2,...
+[Symmetry] Num fixable by intersecting at_most_one with orbits: 45 largest_orbit: 2
+
+Presolve summary:
+  - 115 affine relations were detected.
+  - rule 'TODO variables: only used in linear1.' was applied 14 times.
+  - rule 'affine: new relation' was applied 115 times.
+  - rule 'at_most_one: transformed into max clique.' was applied 1 time.
+  - rule 'bool_or: implications' was applied 9 times.
+  - rule 'bool_or: only one literal' was applied 308 times.
+  - rule 'deductions: 37823 stored' was applied 1 time.
+  - rule 'dual: reduced domain' was applied 105 times.
+  - rule 'duplicate: merged rhs of linear constraint' was applied 21 times.
+  - rule 'duplicate: removed constraint' was applied 36 times.
+  - rule 'exactly_one: duplicate literals' was applied 814 times.
+  - rule 'exactly_one: removed literals' was applied 1044 times.
+  - rule 'exactly_one: satisfied' was applied 31 times.
+  - rule 'exactly_one: size one' was applied 2 times.
+  - rule 'exactly_one: size two' was applied 69 times.
+  - rule 'exactly_one: x and not(x)' was applied 44 times.
+  - rule 'false enforcement literal' was applied 2819 times.
+  - rule 'linear1: is boolean implication' was applied 44 times.
+  - rule 'linear1: without enforcement' was applied 4 times.
+  - rule 'linear: always true' was applied 155 times.
+  - rule 'linear: divide by GCD' was applied 44 times.
+  - rule 'linear: empty' was applied 60 times.
+  - rule 'linear: fixed or dup variables' was applied 696 times.
+  - rule 'linear: infeasible' was applied 308 times.
+  - rule 'linear: reduced variable domains' was applied 66 times.
+  - rule 'linear: remapped using affine relations' was applied 1147 times.
+  - rule 'linear: simplified rhs' was applied 1105 times.
+  - rule 'linear: singleton column' was applied 2 times.
+  - rule 'objective: variable not used elsewhere' was applied 4 times.
+  - rule 'presolve: 1555 unused variables removed.' was applied 1 time.
+  - rule 'presolve: iteration' was applied 1 time.
+  - rule 'symmetry: fixed to false in general orbit' was applied 45 times.
+  - rule 'true enforcement literal' was applied 66 times.
+  - rule 'variables with 2 values: create encoding literal' was applied 22 times.
+  - rule 'variables with 2 values: new affine relation' was applied 22 times.
+  - rule 'variables: detect half reified value encoding' was applied 12355 times.
+
+Presolved optimization model '':
+#Variables: 11814 (#bools:6 in objective)
+  - 10858 in [0,1]
+  - 10 in [0,364]
+  - 10 in [0,375]
+  - 5 in [0,389]
+  - 26 in [0,404]
+  - 11 in [0,410]
+  - 399 in [0,420]
+  - 17 in [0,530]
+  - 454 in [0,540]
+  - 6 in [0,900]
+  - 2 in [225,900]
+  - 6 in [308,1248]
+  - 6 in [318,1263]
+  - 1 in [330,1033]
+  - 1 in [335,1033]
+  - 2 in [560,1263]
+#kBoolAnd: 5 (#enforced: 5) (#literals: 5)
+#kExactlyOne: 1061 (#literals: 42137)
+#kLinear1: 11454 (#enforced: 11454)
+#kLinear2: 11463 (#enforced: 11461)
+#kLinear3: 6
+#kLinearN: 1 (#terms: 10)
+
+Preloading model.
+[Symmetry] Graph for symmetry has 37199 nodes and 100870 arcs.
+[Symmetry] Symmetry computation done. time: 0.0100419 dtime: 0.0193455
+#Bound   1.05s best:inf   next:[4,10]     initial_domain
+
+Starting Search at 1.09s with 8 workers.
+6 full subsolvers: [default_lp, no_lp, max_lp, core, reduced_costs, pseudo_costs]
+Interleaved subsolvers: [feasibility_pump, rnd_var_lns_default, rnd_cst_lns_default, graph_var_lns_default, graph_cst_lns_default, rins_lns_default, rens_lns_default]
+#Bound   6.11s best:inf   next:[5,10]     bool_core num_cores:1 [core:1 mw:1 d:0] assumptions:5 depth:0 fixed_bools:19/16824
+#1       6.21s best:10    next:[5,9]      no_lp fixed_bools:37/16824
+#Bound   6.35s best:10    next:[6,9]      bool_core num_cores:2 [core:1 mw:1 d:0] assumptions:4 depth:0 fixed_bools:37/16824
+#2       6.43s best:6     next:[]         core fixed_bools:1902/16824
+#Done    6.43s core
+
+Sub-solver search statistics:
+  'max_lp':
+     LP statistics:
+       final dimension: 45135 rows, 11814 columns, 153214 entries with magnitude in [2.760449e-02, 1.000000e+00]
+       total number of simplex iterations: 0
+       num solves: 
+         - #DUAL_FEASIBLE: 1
+       managed constraints: 45135
+       merged constraints: 34
+       shortened constraints: 6
+       coefficient strenghtenings: 270
+       total cuts added: 0 (out of 0 calls)
+
+  'reduced_costs':
+     LP statistics:
+       final dimension: 0 rows, 11814 columns, 0 entries with magnitude in [0.000000e+00, 0.000000e+00]
+       total number of simplex iterations: 0
+       num solves: 
+         - #DUAL_FEASIBLE: 1
+       managed constraints: 45135
+       merged constraints: 34
+       shortened constraints: 6
+       coefficient strenghtenings: 270
+       total cuts added: 0 (out of 0 calls)
+
+  'pseudo_costs':
+     LP statistics:
+       final dimension: 0 rows, 11814 columns, 0 entries with magnitude in [0.000000e+00, 0.000000e+00]
+       total number of simplex iterations: 0
+       num solves: 
+         - #DUAL_FEASIBLE: 1
+       managed constraints: 45135
+       merged constraints: 34
+       shortened constraints: 6
+       coefficient strenghtenings: 270
+       total cuts added: 0 (out of 0 calls)
+
+
+Solutions found per subsolver:
+  'core': 1
+  'no_lp': 1
+
+Objective bounds found per subsolver:
+  'bool_core': 2
+  'initial_domain': 1
+
+Improving variable bounds shared per subsolver:
+  'core': 22
+  'no_lp': 1284
+
+Clauses shared per subsolver:
+  'core': 1
+  'no_lp': 8
+
+CpSolverResponse summary:
+status: OPTIMAL
+objective: 6
+best_bound: 6
+booleans: 16824
+conflicts: 590
+branches: 14460
+propagations: 9595063
+integer_propagations: 395765
+restarts: 10015
+lp_iterations: 0
+walltime: 7.19293
+usertime: 7.19293
+deterministic_time: 1.22288
+gap_integral: 0.00117827
+
+
+## Starting CP-SAT solver v9.3.10497
+Parameters: log_search_progress: true num_search_workers: 8
+
+Initial optimization model '':
+#Variables: 8058 (#bools:6534 in objective)
+  - 7434 in [0,1]
+  - 300 in [0,420]
+  - 306 in [0,540]
+  - 6 in [0,900]
+  - 6 in [308,1248]
+  - 6 in [318,1263]
+#kExactlyOne: 762 (#literals: 28836)
+#kLinear1: 7976 (#enforced: 7968)
+#kLinear2: 7800 (#enforced: 7800)
+#kLinear3: 6
+#kLinearN: 2 (#terms: 6546)
+
+Starting presolve at 0.01s
+[ExtractEncodingFromLinear] #potential_supersets=691 #potential_subsets=0 #at_most_one_encodings=0 #exactly_one_encodings=0 #unique_terms=0 #multiple_terms=0 #literals=0 time=0.000179832s
+[Probing] deterministic_time: 1.0001 (limit: 1) wall_time: 1.42636 (Aborted 6965/10800)
+[Probing]  - new fixed Boolean: 52 (1130/10800)
+[Probing]  - new integer holes: 24
+[Probing]  - new integer bounds: 183
+[Probing]  - new binary clause: 100648
+[SAT presolve] num removable Booleans: 1141 / 8082
+[SAT presolve] num trivial clauses: 0
+[SAT presolve] [0s] clauses:48 literals:96 vars:36 one_side_vars:0 simple_definition:24 singleton_clauses:0
+[SAT presolve] [7.0042e-05s] clauses:48 literals:96 vars:36 one_side_vars:0 simple_definition:24 singleton_clauses:0
+[SAT presolve] [0.000271651s] clauses:48 literals:96 vars:36 one_side_vars:0 simple_definition:24 singleton_clauses:0
+[MaxClique] Merged 48(96 literals) into 12(24 literals) at_most_ones.
+[DetectDuplicateConstraints] #duplicates=24 time=0.00978458s
+[DetectDominatedLinearConstraints] #relevant_constraints=6 #work_done=17160 #num_inclusions=0 #num_redundant=0 time=0.00128288s
+[DetectOverlappingColumns] #processed_columns=552 #work_done=11464 #nz_reduction=0 time=0.00210548s
+[ProcessSetPPC] #relevant_constraints=686 #num_inclusions=0 work=80987 time=0.0019804s
+[Symmetry] Graph for symmetry has 28548 nodes and 70075 arcs.
+[Symmetry] Symmetry computation done. time: 0.0182533 dtime: 0.0188768
+[Symmetry] #generators: 3, average support size: 2432
+[Symmetry] 1216 orbits with sizes: 4,4,4,4,4,4,4,4,4,4,...
+[Symmetry] Num fixable by intersecting at_most_one with orbits: 135 largest_orbit: 4
+[Symmetry] Found orbitope of size 1216 x 4
+
+Presolve summary:
+  - 114 affine relations were detected.
+  - rule 'affine: new relation' was applied 114 times.
+  - rule 'at_most_one: transformed into max clique.' was applied 1 time.
+  - rule 'bool_or: only one literal' was applied 364 times.
+  - rule 'deductions: 22585 stored' was applied 1 time.
+  - rule 'dual: reduced domain' was applied 90 times.
+  - rule 'duplicate: merged rhs of linear constraint' was applied 15 times.
+  - rule 'duplicate: removed constraint' was applied 24 times.
+  - rule 'exactly_one: duplicate literals' was applied 764 times.
+  - rule 'exactly_one: removed literals' was applied 1143 times.
+  - rule 'exactly_one: satisfied' was applied 26 times.
+  - rule 'exactly_one: simplified objective' was applied 21 times.
+  - rule 'exactly_one: size one' was applied 5 times.
+  - rule 'exactly_one: size two' was applied 63 times.
+  - rule 'exactly_one: x and not(x)' was applied 44 times.
+  - rule 'false enforcement literal' was applied 2478 times.
+  - rule 'linear1: is boolean implication' was applied 48 times.
+  - rule 'linear1: without enforcement' was applied 8 times.
+  - rule 'linear: always true' was applied 215 times.
+  - rule 'linear: divide by GCD' was applied 48 times.
+  - rule 'linear: empty' was applied 49 times.
+  - rule 'linear: fixed or dup variables' was applied 781 times.
+  - rule 'linear: infeasible' was applied 364 times.
+  - rule 'linear: reduced variable domains' was applied 64 times.
+  - rule 'linear: remapped using affine relations' was applied 1226 times.
+  - rule 'linear: simplified rhs' was applied 609 times.
+  - rule 'objective: variable not used elsewhere' was applied 253 times.
+  - rule 'presolve: 1394 unused variables removed.' was applied 1 time.
+  - rule 'presolve: iteration' was applied 1 time.
+  - rule 'symmetry: fixed to false in general orbit' was applied 135 times.
+  - rule 'true enforcement literal' was applied 51 times.
+  - rule 'variables with 2 values: create encoding literal' was applied 24 times.
+  - rule 'variables with 2 values: new affine relation' was applied 24 times.
+  - rule 'variables: detect half reified value encoding' was applied 7411 times.
+
+Presolved optimization model '':
+#Variables: 6594 (#bools:5395 in objective)
+  - 6044 in [0,1]
+  - 6 in [0,364]
+  - 6 in [0,375]
+  - 20 in [0,404]
+  - 13 in [0,410]
+  - 221 in [0,420]
+  - 21 in [0,530]
+  - 251 in [0,540]
+  - 6 in [225,900]
+  - 3 in [308,1038]
+  - 3 in [533,1263]
+#kExactlyOne: 661 (#literals: 23550)
+#kLinear1: 6174 (#enforced: 6174)
+#kLinear2: 6421 (#enforced: 6421)
+#kLinear3: 3
+#kLinearN: 2 (#terms: 5485)
+
+Preloading model.
+[Symmetry] Graph for symmetry has 26130 nodes and 66930 arcs.
+[Symmetry] Symmetry computation done. time: 0.0125579 dtime: 0.0144149
+[Symmetry] #generators: 2, average support size: 2328
+[Symmetry] The model contains 5 duplicate constraints !
+[Symmetry] Found orbitope of size 1164 x 3
+#Bound   1.76s best:inf   next:[188,1497863] initial_domain
+
+Starting Search at 1.77s with 8 workers.
+6 full subsolvers: [default_lp, no_lp, max_lp, core, reduced_costs, pseudo_costs]
+Interleaved subsolvers: [feasibility_pump, rnd_var_lns_default, rnd_cst_lns_default, graph_var_lns_default, graph_cst_lns_default, rins_lns_default, rens_lns_default]
+#1      11.06s best:2210  next:[188,2209] core fixed_bools:36/9111
+#Bound  11.56s best:2210  next:[2069,2209] reduced_costs initial_propagation
+#2      11.93s best:2197  next:[2069,2196] graph_cst_lns_default(d=0.81 s=1977 t=0.10 p=1.00)
+#3      12.00s best:2195  next:[2069,2194] no_lp fixed_bools:36/9111
+#4      12.02s best:2179  next:[2069,2178] no_lp fixed_bools:36/9111
+#5      12.04s best:2170  next:[2069,2169] no_lp fixed_bools:36/9111
+#6      12.06s best:2164  next:[2069,2163] no_lp fixed_bools:36/9111
+#7      12.07s best:2162  next:[2069,2161] no_lp fixed_bools:36/9111
+#8      12.24s best:2154  next:[2069,2153] no_lp fixed_bools:36/9111
+#9      13.10s best:2141  next:[2069,2140] no_lp fixed_bools:43/9111
+#Bound  18.88s best:2141  next:[2105,2140] max_lp
+#10     28.94s best:2105  next:[]         reduced_costs fixed_bools:3084/9111
+#Done   29.16s pseudo_costs
+#Done   29.42s reduced_costs
+
+Sub-solver search statistics:
+  'max_lp':
+     LP statistics:
+       final dimension: 25036 rows, 6594 columns, 90551 entries with magnitude in [1.025465e-02, 1.000000e+00]
+       total number of simplex iterations: 2849
+       num solves: 
+         - #OPTIMAL: 7
+         - #DUAL_FEASIBLE: 4
+       managed constraints: 25063
+       merged constraints: 89
+       shortened constraints: 19
+       num simplifications: 3
+       total cuts added: 173 (out of 200 calls)
+         - 'IB': 173
+
+  'reduced_costs':
+     LP statistics:
+       final dimension: 1022 rows, 6594 columns, 16954 entries with magnitude in [1.307710e-02, 1.000000e+00]
+       total number of simplex iterations: 3325
+       num solves: 
+         - #OPTIMAL: 29
+         - #DUAL_UNBOUNDED: 3
+         - #DUAL_FEASIBLE: 195
+       managed constraints: 26045
+       merged constraints: 422
+       shortened constraints: 13270
+       coefficient strenghtenings: 259
+       num simplifications: 37650
+       total cuts added: 1155 (out of 1515 calls)
+         - 'CG': 14
+         - 'IB': 790
+         - 'MIR_1': 20
+         - 'MIR_2': 3
+         - 'MIR_3': 1
+         - 'MIR_4': 2
+         - 'ZERO_HALF': 1
+         - 'clique': 324
+
+  'pseudo_costs':
+     LP statistics:
+       final dimension: 699 rows, 6594 columns, 10503 entries with magnitude in [1.307710e-02, 1.000000e+00]
+       total number of simplex iterations: 1640
+       num solves: 
+         - #OPTIMAL: 23
+         - #DUAL_FEASIBLE: 6
+       managed constraints: 25894
+       merged constraints: 369
+       shortened constraints: 14840
+       coefficient strenghtenings: 322
+       num simplifications: 64264
+       total cuts added: 1004 (out of 1311 calls)
+         - 'CG': 54
+         - 'CG_K': 1
+         - 'IB': 502
+         - 'MIR_1': 70
+         - 'MIR_1_K': 3
+         - 'MIR_2': 12
+         - 'MIR_3': 11
+         - 'MIR_4': 4
+         - 'MIR_5': 3
+         - 'MIR_6': 4
+         - 'ZERO_HALF': 3
+         - 'clique': 337
+
+
+Solutions found per subsolver:
+  'core': 1
+  'graph_cst_lns_default': 1
+  'no_lp': 7
+  'reduced_costs': 1
+
+Objective bounds found per subsolver:
+  'initial_domain': 1
+  'max_lp': 1
+  'reduced_costs': 1
+
+Improving variable bounds shared per subsolver:
+  'core': 72
+  'default_lp': 9
+  'max_lp': 43
+  'pseudo_costs': 212
+  'reduced_costs': 3020
+
+Clauses shared per subsolver:
+  'core': 41
+  'default_lp': 14
+  'no_lp': 52
+
+CpSolverResponse summary:
+status: OPTIMAL
+objective: 2105
+best_bound: 2105
+booleans: 9111
+conflicts: 3
+branches: 12251
+propagations: 8501925
+integer_propagations: 7654086
+restarts: 12251
+lp_iterations: 2849
+walltime: 29.7174
+usertime: 29.7174
+deterministic_time: 15.6556
+gap_integral: 10.5468
+
+----------- first pass: minimize the number of drivers
+Bus driver scheduling
+  num shifts = 50
+  total driving time = 2355 minutes
+  min num drivers = 5
+  num drivers = 10
+  min start time = 318
+  max end time = 1248
+minimal number of drivers = 6
+----------- second pass: minimize the sum of working times
+Bus driver scheduling
+  num shifts = 50
+  total driving time = 2355 minutes
+  min num drivers = 5
+  num drivers = 6
+  min start time = 318
+  max end time = 1248
+Driver 1: 
+  total driving time = 505
+  working time = 752
+    shift  0 : 05:18 - 06:00
+    shift  3 : 06:06 - 06:51
+    shift  7 : 06:59 - 08:07
+    shift  13 : 08:11 - 09:41
+    shift  21 : 10:09 - 11:03
+    **break**
+    shift  26 : 13:18 - 14:44
+    shift  31 : 14:48 - 15:35
+    shift  35 : 15:40 - 15:56
+    shift  36 : 15:58 - 16:45
+    shift  40 : 16:50 - 17:00
+Driver 2: 
+  total driving time = 377
+  working time = 819
+    shift  1 : 05:26 - 06:08
+    shift  4 : 06:40 - 07:52
+    shift  12 : 08:00 - 08:35
+    shift  16 : 08:40 - 08:50
+    shift  18 : 09:23 - 09:49
+    shift  20 : 09:57 - 10:20
+    **break**
+    shift  25 : 12:18 - 13:00
+    **break**
+    shift  37 : 16:04 - 17:30
+    shift  45 : 17:34 - 18:15
+Driver 3: 
+  total driving time = 405
+  working time = 800
+    shift  2 : 05:40 - 05:56
+    shift  5 : 06:42 - 07:13
+    shift  8 : 07:20 - 07:36
+    shift  10 : 07:50 - 08:55
+    shift  17 : 09:03 - 10:28
+    **break**
+    shift  29 : 14:28 - 15:15
+    shift  33 : 15:28 - 16:54
+    shift  42 : 17:01 - 17:13
+    shift  44 : 17:23 - 18:10
+Driver 4: 
+  total driving time = 388
+  working time = 876
+    shift  6 : 06:48 - 08:15
+    shift  15 : 08:35 - 08:45
+    shift  19 : 09:30 - 09:40
+    **break**
+    shift  23 : 11:00 - 11:10
+    **break**
+    shift  27 : 13:53 - 14:49
+    shift  34 : 15:38 - 16:25
+    shift  39 : 16:36 - 17:21
+    shift  46 : 18:04 - 19:29
+    shift  48 : 19:56 - 20:34
+Driver 5: 
+  total driving time = 405
+  working time = 818
+    shift  11 : 08:00 - 09:05
+    **break**
+    shift  28 : 14:03 - 14:50
+    shift  32 : 15:03 - 15:50
+    shift  38 : 16:28 - 17:15
+    shift  43 : 17:19 - 18:31
+    shift  47 : 18:34 - 19:58
+    shift  49 : 20:05 - 20:48
+Driver 6: 
+  total driving time = 275
+  working time = 695
+    shift  9 : 07:35 - 08:22
+    shift  14 : 08:28 - 08:50
+    **break**
+    shift  22 : 10:20 - 10:30
+    **break**
+    shift  24 : 11:45 - 12:24
+    **break**
+    shift  30 : 14:30 - 15:41
+    **break**
+    shift  41 : 16:54 - 18:20

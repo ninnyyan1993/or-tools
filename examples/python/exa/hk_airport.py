@@ -14,13 +14,24 @@
 """This model implements a bus scheduling problem at hk airport.
 
 Constraints:
-- max driving time per bus <= 9h
-- max working time per bus <= 12h
-- min working time per bus >= 6.5h (soft)
-- 30 min break after each 4h of driving time per bus
+- max driving time per driver <= 9h
+- max working time per driver <= 12h
+- min working time per driver >= 6.5h (soft)
+- 30 min break after each 4h of driving time per driver
 - 10 min preparation time before the first shift
 - 15 min cleaning time after the last shift
 - 2 min waiting time after each shift for passenger boarding and alighting
+"""
+
+"""
+hk Airport Constraints:
+- max driving time per bus <= 9h//我们没有driver，只有车
+- max working time per bus <= 15h
+- min working time per bus >= 3.75h (soft)
+- 60 min break for electronic capacity after each 7h of driving time per bus
+- 10 min preparation time before the first shift//这两项可以保留，尽管文档中没有提到，但这是很合理的两项
+- 15 min cleaning time after the last shift//
+- 2 min waiting time after each shift for passenger boarding and alighting//12个座位，12个人上车，下车，每人平均10秒上下车，可以采用这个假设
 """
 
 import collections
@@ -56,6 +67,68 @@ SAMPLE_SHIFTS_SMALL = [
     [3, '06:06', '06:51', 366, 411, 45],
     [4, '06:40', '07:52', 400, 472, 72],
     [5, '06:42', '07:13', 402, 433, 31]
+]  # yapf:disable
+
+SAMPLE_SHIFTS_SMALL = [
+    #
+    # column description:
+    # - shift id
+    # - shift start time as hh:mm string (for logging and readability purposes)
+    # - shift end time as hh:mm string (for logging and readability purposes)
+    # - shift start minute
+    # - shift end minute
+    # - shift duration in minutes
+    #
+    [0, '05:18', '06:00', 318, 360, 42],
+    [1, '05:26', '06:08', 326, 368, 42],
+    [2, '05:40', '05:56', 340, 356, 16],
+    [3, '06:06', '06:51', 366, 411, 45],
+    [4, '06:40', '07:52', 400, 472, 72],
+    [5, '06:42', '07:13', 402, 433, 31],
+    [6, '06:48', '08:15', 408, 495, 87],
+    [7, '06:59', '08:07', 419, 487, 68],
+    [8, '07:20', '07:36', 440, 456, 16],
+    [9, '07:35', '08:22', 455, 502, 47],
+    [10, '07:50', '08:55', 470, 535, 65],
+    [11, '08:00', '09:05', 480, 545, 65],
+    [12, '08:00', '08:35', 480, 515, 35],
+    [13, '08:11', '09:41', 491, 581, 90],
+    [14, '08:28', '08:50', 508, 530, 22],
+    [15, '08:35', '08:45', 515, 525, 10],
+    [16, '08:40', '08:50', 520, 530, 10],
+    [17, '09:03', '10:28', 543, 628, 85],
+    [18, '09:23', '09:49', 563, 589, 26],
+    [19, '09:30', '09:40', 570, 580, 10],
+    [20, '09:57', '10:20', 597, 620, 23],
+    [21, '10:09', '11:03', 609, 663, 54],
+    [22, '10:20', '10:30', 620, 630, 10],
+    [23, '11:00', '11:10', 660, 670, 10],
+    [24, '11:45', '12:24', 705, 744, 39],
+    [25, '12:18', '13:00', 738, 780, 42],
+    [26, '13:18', '14:44', 798, 884, 86],
+    [27, '13:53', '14:49', 833, 889, 56],
+    [28, '14:03', '14:50', 843, 890, 47],
+    [29, '14:28', '15:15', 868, 915, 47],
+    [30, '14:30', '15:41', 870, 941, 71],
+    [31, '14:48', '15:35', 888, 935, 47],
+    [32, '15:03', '15:50', 903, 950, 47],
+    [33, '15:28', '16:54', 928, 1014, 86],
+    [34, '15:38', '16:25', 938, 985, 47],
+    [35, '15:40', '15:56', 940, 956, 16],
+    [36, '15:58', '16:45', 958, 1005, 47],
+    [37, '16:04', '17:30', 964, 1050, 86],
+    [38, '16:28', '17:15', 988, 1035, 47],
+    [39, '16:36', '17:21', 996, 1041, 45],
+    [40, '16:50', '17:00', 1010, 1020, 10],
+    [41, '16:54', '18:20', 1014, 1100, 86],
+    [42, '17:01', '17:13', 1021, 1033, 12],
+    [43, '17:19', '18:31', 1039, 1111, 72],
+    [44, '17:23', '18:10', 1043, 1090, 47],
+    [45, '17:34', '18:15', 1054, 1095, 41],
+    [46, '18:04', '19:29', 1084, 1169, 85],
+    [47, '18:34', '19:58', 1114, 1198, 84],
+    [48, '19:56', '20:34', 1196, 1234, 38],
+    [49, '20:05', '20:48', 1205, 1248, 43]
 ]  # yapf:disable
 
 SAMPLE_SHIFTS_MEDIUM = [
@@ -114,12 +187,12 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
     num_shifts = len(shifts)
 
     # All durations are in minutes.
-    max_driving_time = 540  # 8 hours.
-    max_driving_time_without_pauses = 240  # 4 hours
-    min_pause_after_4h = 30
+    max_driving_time = 540  # 8 hours.？？？
+    max_driving_time_without_pauses = 420  # 7 hours
+    min_pause_after_4h = 60
     min_delay_between_shifts = 2
-    max_working_time = 720
-    min_working_time = 390  # 6.5 hours
+    max_working_time = 900 # 15 hours
+    min_working_time = 225  # 3.75 hours
     setup_time = 10
     cleanup_time = 15
 
@@ -159,7 +232,7 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
     # driving time since break)
     total_driving = {}
     no_break_driving = {}
-    performed = {}
+    performed = {} # ???
     starting_shifts = {}
 
     # Per driver info (start, end, driving times, is working)
@@ -170,8 +243,8 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
     working_times = []
 
     # Weighted objective
-    delay_literals = []
-    delay_weights = []
+    delay_literals = [] # ???
+    delay_weights = [] # 延迟权重
 
     # Used to propagate more between drivers
     shared_incoming_literals = collections.defaultdict(list)
